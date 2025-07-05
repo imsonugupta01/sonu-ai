@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+  max-width: 100%;
+}
+
+.app-header {
+  padding: 1rem;
+  text-align: center;
+  background-color: #1e1e1e;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  border-bottom: 1px solid #333;
+}
+
+.chat-box {
+  flex: 1;
+  background-color: #1e1e1e;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.chat-message {
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border-radius: 20px;
+  max-width: 80%;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.chat-message.user {
+  background-color: #0d47a1;
+  color: #ffffff;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.chat-message.bot {
+  background-color: #333;
+  color: #f5f5f5;
+  align-self: flex-start;
+  margin-right: auto;
+}
+
+.input-box {
+  display: flex;
+  gap: 10px;
+  padding: 1rem;
+  background-color: #1e1e1e;
+  border-top: 1px solid #333;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 1px solid #555;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.input-box input::placeholder {
+  color: #bbb;
+}
+
+.input-box button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 20px;
+  background-color: #007bff;
   color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-.App-link {
-  color: #61dafb;
+.input-box button:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Markdown-style code block support */
+.chat-message.bot pre {
+  background-color: #2d2d2d;
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: monospace;
+  color: #f8f8f2;
+}
+
+.chat-message.bot code {
+  background-color: #2d2d2d;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.95em;
+  color: #ffcb6b;
 }
