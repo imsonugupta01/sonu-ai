@@ -3,6 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import './App.css';
 
+const API_KEY = 'AIzaSyC9LsdNhtLjSFgI--c2j2UonbV0nlKnj1c'; // ⚠️ Not safe to expose in prod
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+
 function App() {
   const [prompt, setPrompt] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
@@ -12,25 +15,31 @@ function App() {
     if (!prompt.trim()) return;
 
     const userMessage = { role: 'user', text: prompt };
-    setChatHistory([...chatHistory, userMessage]);
+    setChatHistory((prev) => [...prev, userMessage]);
     setLoading(true);
 
+    const requestBody = {
+      contents: [
+        {
+          parts: [{ text: prompt }]
+        }
+      ]
+    };
+
     try {
-      const res = await fetch('https://gpt-backend-nu.vercel.app/api/gemini', {
+      const response = await fetch(`${GEMINI_URL}?key=${API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify(requestBody),
       });
 
-      const data = await res.json();
-      const botReply = {
-        role: 'bot',
-        text: data.reply || 'Sorry, I could not understand.',
-      };
+      const data = await response.json();
+      const replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not understand.';
 
-      setChatHistory((prev) => [...prev, botReply]);
+      const botMessage = { role: 'bot', text: replyText };
+      setChatHistory((prev) => [...prev, botMessage]);
     } catch (err) {
       setChatHistory((prev) => [
         ...prev,
